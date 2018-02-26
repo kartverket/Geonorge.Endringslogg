@@ -7,7 +7,7 @@ namespace Geonorge.Endringslogg.Web.Models
         /// <summary>
         ///     Unique identifier for this entry
         /// </summary>
-        public Guid Uuid { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         ///     Date and time for when the event happened.
