@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Geonorge.Endringslogg.Web.Models;
+using Geonorge.Endringslogg.Models;
 using Geonorge.Endringslogg.Web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

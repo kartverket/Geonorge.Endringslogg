@@ -1,4 +1,4 @@
-﻿using Geonorge.Endringslogg.Web.Models;
+﻿using Geonorge.Endringslogg.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Geonorge.Endringslogg.Web.Data

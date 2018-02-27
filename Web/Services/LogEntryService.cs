@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Geonorge.Endringslogg.Web.Data;
-using Geonorge.Endringslogg.Web.Models;
+using Geonorge.Endringslogg.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Geonorge.Endringslogg.Web.Services

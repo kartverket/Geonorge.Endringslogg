@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Geonorge.Endringslogg.Web.Models
+namespace Geonorge.Endringslogg.Models
 {
     public class LogEntry
     {
