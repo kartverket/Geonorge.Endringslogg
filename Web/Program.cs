@@ -19,6 +19,7 @@ namespace Geonorge.Endringslogg.Web
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
+                .WriteTo.RollingFile(@"C:\inetpub\logs\edringslogg.txt")
                 .CreateLogger();
 
             try
