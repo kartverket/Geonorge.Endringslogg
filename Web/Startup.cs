@@ -26,6 +26,9 @@ namespace Geonorge.Endringslogg.Web
 
             services.AddTransient<LogEntryService>();
 
+            AppSettings appSettings = Configuration.GetSection("AppSettings").Get<AppSettings>();
+            services.AddSingleton(appSettings);
+
             services.AddMvc();
         }
 

@@ -34,4 +34,10 @@
     <ProjectReference Include="..\Geonorge.Endringslogg.Models\Geonorge.Endringslogg.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using Geonorge.Endringslogg.Web.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -12,14 +14,22 @@ namespace Geonorge.Endringslogg.Web
 {
     public class Program
     {
+        public static IConfiguration Configuration { get; set; }
+
         public static int Main(string[] args)
         {
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json");
+
+            Configuration = builder.Build();
+
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.RollingFile(@"C:\inetpub\logs\edringslogg.txt")
+                .WriteTo.RollingFile(Configuration["AppSettings:LogFile"])
                 .CreateLogger();
 
             try
