@@ -34,12 +34,12 @@ namespace Geonorge.Endringslogg.Web.Controllers
         }
 
         [Route("list")]
-        public async Task<IActionResult> GetEntriesForElement([FromQuery] string elementId)
+        public async Task<IActionResult> GetEntriesForElement([FromQuery] string elementId, int limitNumberOfEntries = 10)
         {
             List<LogEntry> entries;
             try
             {
-                entries = await _logEntryService.EntriesForElementAsync(elementId);
+                entries = await _logEntryService.EntriesForElementAsync(elementId, limitNumberOfEntries);
             }
             catch (Exception)
             {
