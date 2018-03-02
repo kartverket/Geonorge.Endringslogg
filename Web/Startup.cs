@@ -1,4 +1,5 @@
-﻿using Geonorge.Endringslogg.Web.Data;
+﻿using Geonorge.Endringslogg.Web.ActionFilters;
+using Geonorge.Endringslogg.Web.Data;
 using Geonorge.Endringslogg.Web.Services;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
@@ -25,11 +26,13 @@ namespace Geonorge.Endringslogg.Web
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<LogEntryService>();
+            services.AddTransient<IApplicationService, ApplicationService>();
 
             AppSettings appSettings = Configuration.GetSection("AppSettings").Get<AppSettings>();
             services.AddSingleton(appSettings);
 
             services.AddMvc();
+            services.AddScoped<LogHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

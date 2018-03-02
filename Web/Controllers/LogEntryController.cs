@@ -5,9 +5,11 @@ using Geonorge.Endringslogg.Models;
 using Geonorge.Endringslogg.Web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Geonorge.Endringslogg.Web.ActionFilters;
 
 namespace Geonorge.Endringslogg.Web.Controllers
 {
+    [ServiceFilter(typeof(LogHandler))]
     [Route("api/logentry")]
     public class LogEntryController : Controller
     {
@@ -23,6 +25,7 @@ namespace Geonorge.Endringslogg.Web.Controllers
         {
             try
             {
+                entry.Application = RouteData.Values["application"].ToString();
                 await _logEntryService.AddAsync(entry);
             }
             catch (Exception)
