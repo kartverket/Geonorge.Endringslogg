@@ -72,6 +72,7 @@ namespace Geonorge.Endringslogg.Web
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     context.Database.Migrate();
+                    DbInitializer.Initialize(context);
                 }
 
                 catch (Exception ex)

@@ -9,11 +9,24 @@ namespace Geonorge.Endringslogg.Web.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Applications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ApiKey = table.Column<string>(nullable: true),
+                    ApplicationName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Applications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LogEntries",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Application = table.Column<int>(nullable: false),
+                    Application = table.Column<string>(nullable: true),
                     DateTime = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     ElementId = table.Column<string>(nullable: true),
@@ -23,6 +36,13 @@ namespace Geonorge.Endringslogg.Web.Migrations
                 {
                     table.PrimaryKey("PK_LogEntries", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Applications_ApiKey",
+                table: "Applications",
+                column: "ApiKey",
+                unique: true,
+                filter: "[ApiKey] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LogEntries_Application",
@@ -47,6 +67,9 @@ namespace Geonorge.Endringslogg.Web.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Applications");
+
             migrationBuilder.DropTable(
                 name: "LogEntries");
         }
