@@ -25,7 +25,7 @@ namespace Geonorge.Endringslogg.Models
         public string User { get; set; }
 
         /// <summary>
-        ///     Description of what happened. E.g Adjusted extent in metadata.
+        ///     Description of what happened.
         /// </summary>
         public string Description { get; set; }
 
@@ -33,5 +33,15 @@ namespace Geonorge.Endringslogg.Models
         ///     The identificator of the element that has changed, e.g. the metadata uuid
         /// </summary>
         public string ElementId { get; set; }
+
+        /// <summary>
+        ///     The title of the element that has changed
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        ///     Type of operation: Added, Modified, Deleted
+        /// </summary>
+        public string Operation { get; set; }
     }
 }

@@ -51,6 +51,10 @@ namespace Geonorge.Endringslogg.Web.Migrations
 
                     b.Property<string>("ElementId");
 
+                    b.Property<string>("Operation");
+
+                    b.Property<string>("Title");
+
                     b.Property<string>("User");
 
                     b.HasKey("Id");

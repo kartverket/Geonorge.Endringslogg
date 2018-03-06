@@ -30,6 +30,8 @@ namespace Geonorge.Endringslogg.Web.Migrations
                     DateTime = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     ElementId = table.Column<string>(nullable: true),
+                    Operation = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
                     User = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

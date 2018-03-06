@@ -11,7 +11,7 @@ using System;
 namespace Geonorge.Endringslogg.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180302112408_Initial")]
+    [Migration("20180306124906_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,10 @@ namespace Geonorge.Endringslogg.Web.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("ElementId");
+
+                    b.Property<string>("Operation");
+
+                    b.Property<string>("Title");
 
                     b.Property<string>("User");
 
