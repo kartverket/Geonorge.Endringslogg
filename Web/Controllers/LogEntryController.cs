@@ -51,5 +51,21 @@ namespace Geonorge.Endringslogg.Web.Controllers
 
             return Ok(entries);
         }
+
+        [Route("list-latest")]
+        public async Task<IActionResult> GetEntries(int limitNumberOfEntries = 50)
+        {
+            List<LogEntry> entries;
+            try
+            {
+                entries = await _logEntryService.EntriesAsync(limitNumberOfEntries);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok(entries);
+        }
     }
 }
