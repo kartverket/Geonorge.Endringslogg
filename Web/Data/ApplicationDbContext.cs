@@ -23,7 +23,6 @@ namespace Geonorge.Endringslogg.Web.Data
             modelBuilder.Entity<LogEntry>().HasIndex(l => l.ElementId);
             modelBuilder.Entity<LogEntry>().HasIndex(l => l.User);
             modelBuilder.Entity<LogEntry>().HasIndex(l => l.Operation);
-            modelBuilder.Entity<LogEntry>().HasIndex(l => l.Title);
         }
     }
 }

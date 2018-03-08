@@ -31,7 +31,6 @@ namespace Geonorge.Endringslogg.Web.Migrations
                     Description = table.Column<string>(nullable: true),
                     ElementId = table.Column<string>(nullable: true),
                     Operation = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
                     User = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -60,6 +59,11 @@ namespace Geonorge.Endringslogg.Web.Migrations
                 name: "IX_LogEntries_ElementId",
                 table: "LogEntries",
                 column: "ElementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LogEntries_Operation",
+                table: "LogEntries",
+                column: "Operation");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LogEntries_User",

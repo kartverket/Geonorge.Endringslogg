@@ -35,11 +35,6 @@ namespace Geonorge.Endringslogg.Models
         public string ElementId { get; set; }
 
         /// <summary>
-        ///     The title of the element that has changed
-        /// </summary>
-        public string Title { get; set; }
-
-        /// <summary>
         ///     Type of operation: Added, Modified, Deleted
         /// </summary>
         public string Operation { get; set; }

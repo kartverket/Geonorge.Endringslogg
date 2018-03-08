@@ -53,8 +53,6 @@ namespace Geonorge.Endringslogg.Web.Migrations
 
                     b.Property<string>("Operation");
 
-                    b.Property<string>("Title");
-
                     b.Property<string>("User");
 
                     b.HasKey("Id");
@@ -64,6 +62,8 @@ namespace Geonorge.Endringslogg.Web.Migrations
                     b.HasIndex("DateTime");
 
                     b.HasIndex("ElementId");
+
+                    b.HasIndex("Operation");
 
                     b.HasIndex("User");
 
