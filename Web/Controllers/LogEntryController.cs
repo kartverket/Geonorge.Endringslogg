@@ -6,6 +6,7 @@ using Geonorge.Endringslogg.Web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Geonorge.Endringslogg.Web.ActionFilters;
+using Serilog;
 
 namespace Geonorge.Endringslogg.Web.Controllers
 {
@@ -28,8 +29,9 @@ namespace Geonorge.Endringslogg.Web.Controllers
                 entry.Application = RouteData.Values["application"].ToString();
                 await _logEntryService.AddAsync(entry);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
@@ -44,8 +46,9 @@ namespace Geonorge.Endringslogg.Web.Controllers
             {
                 entries = await _logEntryService.EntriesForElementAsync(elementId, limitNumberOfEntries);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
@@ -60,8 +63,9 @@ namespace Geonorge.Endringslogg.Web.Controllers
             {
                 entries = await _logEntryService.EntriesAsync(limitNumberOfEntries);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
