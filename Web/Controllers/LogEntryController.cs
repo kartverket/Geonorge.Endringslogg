@@ -56,12 +56,12 @@ namespace Geonorge.Endringslogg.Web.Controllers
         }
 
         [Route("list-latest")]
-        public async Task<IActionResult> GetEntries(int limitNumberOfEntries = 50)
+        public async Task<IActionResult> GetEntries(int limitNumberOfEntries = 50, string operation = null)
         {
             List<LogEntry> entries;
             try
             {
-                entries = await _logEntryService.EntriesAsync(limitNumberOfEntries);
+                entries = await _logEntryService.EntriesAsync(limitNumberOfEntries, operation);
             }
             catch (Exception ex)
             {
