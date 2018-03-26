@@ -34,10 +34,14 @@ namespace Geonorge.Endringslogg.Web.Services
                 .ToListAsync();
         }
 
-        public async Task<List<LogEntry>> EntriesAsync(int limitNumberOfEntries = 50)
+        public async Task<List<LogEntry>> EntriesAsync(int limitNumberOfEntries = 50, string operation = null)
         {
-            return await _dbContext.LogEntries
-                .OrderByDescending(l => l.DateTime)
+            var query = from log in _dbContext.LogEntries
+                        select log;
+            if (!string.IsNullOrEmpty(operation))
+                query = query.Where(l => l.Operation == operation);
+
+            return await query.OrderByDescending(l => l.DateTime)
                 .Take(limitNumberOfEntries)
                 .ToListAsync();
         }

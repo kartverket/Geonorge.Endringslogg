@@ -1,6 +1,7 @@
 ﻿using Geonorge.Endringslogg.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +20,23 @@ namespace Geonorge.Endringslogg.Web.ActionFilters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            context.HttpContext.Request.Headers.TryGetValue("apikey", out var apiKey);
+            try
+            {
+                context.HttpContext.Request.Headers.TryGetValue("apikey", out var apiKey);
 
-            if (string.IsNullOrEmpty(apiKey))
-                context.Result = new UnauthorizedResult();
+                if (string.IsNullOrEmpty(apiKey))
+                    context.Result = new UnauthorizedResult();
 
-            var application = _applicationService.GetApplicationFromApiKey(apiKey).Result;
+                var application = _applicationService.GetApplicationFromApiKey(apiKey).Result;
 
-            if (string.IsNullOrEmpty(application))
-                context.Result = new UnauthorizedResult();
+                if (string.IsNullOrEmpty(application))
+                    context.Result = new UnauthorizedResult();
 
-            context.RouteData.Values.Add("application", application);
+                context.RouteData.Values.Add("application", application);
+            }
+            catch(Exception ex) {
+                Log.Error(ex.Message);
+            }
         }
     }
 }
