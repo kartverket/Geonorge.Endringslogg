@@ -28,6 +28,7 @@ namespace Geonorge.Endringslogg.Web.Services
         public async Task<List<LogEntry>> EntriesForElementAsync(string elementId, int limitNumberOfEntries = 10)
         {
             return await _dbContext.LogEntries
+                .AsNoTracking()
                 .Where(l => l.ElementId == elementId)
                 .OrderByDescending(l => l.DateTime)
                 .Take(limitNumberOfEntries)
@@ -37,6 +38,7 @@ namespace Geonorge.Endringslogg.Web.Services
         public async Task<List<LogEntry>> EntriesAsync(int limitNumberOfEntries = 50, string operation = null)
         {
             var query = from log in _dbContext.LogEntries
+                        .AsNoTracking()
                         select log;
             if (!string.IsNullOrEmpty(operation))
                 query = query.Where(l => l.Operation == operation);
