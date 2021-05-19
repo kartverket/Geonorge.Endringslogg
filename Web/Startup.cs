@@ -30,8 +30,7 @@ namespace Geonorge.Endringslogg.Web
 
             AppSettings appSettings = Configuration.GetSection("AppSettings").Get<AppSettings>();
             services.AddSingleton(appSettings);
-
-            services.AddMvc();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddScoped<LogHandler>();
         }
 
@@ -46,6 +45,7 @@ namespace Geonorge.Endringslogg.Web
             }
 
             app.UseMvc();
+
         }
     }
 }

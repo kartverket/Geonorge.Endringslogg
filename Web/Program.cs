@@ -29,7 +29,7 @@ namespace Geonorge.Endringslogg.Web
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.RollingFile(Configuration["AppSettings:LogFile"])
+                .WriteTo.File(Configuration["AppSettings:LogFile"], rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             try
