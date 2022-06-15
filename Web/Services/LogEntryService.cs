@@ -50,5 +50,18 @@ namespace Geonorge.Endringslogg.Web.Services
                 .Take(limitNumberOfEntries)
                 .ToListAsync();
         }
+
+        public async Task<List<LogEntry>> GMLApplicationSchemasAsync(int limitNumberOfEntries, string elementId)
+        {
+            var query = from log in _dbContext.LogEntries.Where(l => l.Application == "Register" && l.Description.StartsWith("Ftp gml-skjema") ) 
+            .AsNoTracking()
+                        select log;
+            if (!string.IsNullOrEmpty(elementId))
+                query = query.Where(l => l.ElementId.EndsWith(elementId));
+
+            return await query.OrderByDescending(l => l.DateTime)
+                .Take(limitNumberOfEntries)
+                .ToListAsync();
+        }
     }
 }
