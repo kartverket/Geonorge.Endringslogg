@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
@@ -19,8 +20,8 @@ namespace Geonorge.Endringslogg.Web
         public static int Main(string[] args)
         {
             var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json");
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
 
             Configuration = builder.Build();
 
@@ -34,7 +35,7 @@ namespace Geonorge.Endringslogg.Web
 
             try
             {
-                var host = BuildWebHost(args);
+                var host = BuildHost(args);
 
                 MigrateAndSeedDatabase(host);
 
@@ -42,9 +43,7 @@ namespace Geonorge.Endringslogg.Web
                 host.Run();
 
                 return 0;
-
             }
-
             catch (Exception ex)
 
             {
@@ -52,47 +51,40 @@ namespace Geonorge.Endringslogg.Web
 
                 return 1;
             }
-
             finally
-
             {
                 Log.CloseAndFlush();
             }
         }
 
-        private static void MigrateAndSeedDatabase(IWebHost host)
+        private static void MigrateAndSeedDatabase(IHost host)
         {
             Log.Information("Running migrations and seeding data");
 
-            using (var scope = host.Services.CreateScope())
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
+
+            try
             {
-                var services = scope.ServiceProvider;
-
-                try
-                {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
-                    context.Database.Migrate();
-                    DbInitializer.Initialize(context);
-                }
-
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-
-                    logger.LogError(ex, "An error occurred while seeding the database.");
-                }
-
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                context.Database.Migrate();
+                DbInitializer.Initialize(context);
             }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
 
+                logger.LogError(ex, "An error occurred while seeding the database.");
+            }
         }
 
-        public static IWebHost BuildWebHost(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+        public static IHost BuildHost(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                })
                 .UseSerilog()
                 .Build();
-
-        }
     }
 }

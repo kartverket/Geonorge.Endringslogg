@@ -75,5 +75,22 @@ namespace Geonorge.Endringslogg.Web.Controllers
 
             return Ok(entries);
         }
+
+        [Route("list-gml-application-schemas")]
+        public async Task<IActionResult> GetGMLApplicationSchemas(int limitNumberOfEntries = 50, string elementId = null)
+        {
+            List<LogEntry> entries;
+            try
+            {
+                entries = await _logEntryService.GMLApplicationSchemasAsync(limitNumberOfEntries, elementId);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok(entries);
+        }
     }
 }
