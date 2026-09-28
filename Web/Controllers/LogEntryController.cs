@@ -32,6 +32,7 @@ namespace Geonorge.Endringslogg.Web.Controllers
             catch (Exception ex)
             {
                 Log.Error(ex.Message);
+                Log.Information("Add body {@Entry}", entry);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
