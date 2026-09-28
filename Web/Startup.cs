@@ -1,7 +1,6 @@
 ﻿using Geonorge.Endringslogg.Web.ActionFilters;
 using Geonorge.Endringslogg.Web.Data;
 using Geonorge.Endringslogg.Web.Services;
-using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -14,23 +13,16 @@ namespace Geonorge.Endringslogg.Web
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        private readonly IWebHostEnvironment _environment;
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _environment = environment;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddApplicationInsightsTelemetry();
-
-            if (_environment.IsDevelopment())
-                services.Configure<TelemetryConfiguration>(options => options.DisableTelemetry = true);
 
             services.AddTransient<LogEntryService>();
             services.AddTransient<IApplicationService, ApplicationService>();
